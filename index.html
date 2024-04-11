@@ -670,21 +670,50 @@ Ysobella Torio
 	   $( "#dialog" ).dialog( "close" );
    }
 	
-    function uploadFile(){
-		
-        var file    = document.querySelector('input[type=file]').files[0];
-		var reader  = new FileReader();
-		if(file)
-		{
-			reader.onloadend = function()
-			{
-				palette_size = 5;
-				getTransfer(reader.result);
-				$( "#select_dialog" ).dialog( "close" );
-			}
-			reader.readAsDataURL(file);
-		}
-	}
+   function uploadFile() {
+    var file = document.querySelector('input[type=file]').files[0];
+    var reader = new FileReader();
+    if (file) {
+        reader.onloadend = function() {
+            var img = new Image();
+            img.onload = function() {
+                // Resize the image
+                var maxWidth = 800;
+                var maxHeight = 600;
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+
+                // Ratio aspect
+                var width = img.width;
+                var height = img.height;
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height *= maxWidth / width;
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width *= maxHeight / height;
+                        height = maxHeight;
+                    }
+                }
+                canvas.width = width;
+                canvas.height = height;
+				ctx.drawImage(img, 0, 0, width, height);
+
+				// Get new URL to pass
+                canvas.toBlob(function(blob) {
+                    var resizedImageDataURL = URL.createObjectURL(blob);
+                    palette_size = 5;
+                    getTransfer(resizedImageDataURL);
+                    $("#select_dialog").dialog("close");
+                }, 'image/jpeg');
+            };
+            img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
 
     $(function() {
 
@@ -745,7 +774,7 @@ Ysobella Torio
 
 				<div id="button_div" style="width:100%; height:40px;margin-top:10px;align:center;">
 					<label class="buttonstyle"> Choose file
-						<input   type="file" onchange="uploadFile()" data-role="button" data-inline="true" data-mini="true" data-corners="false" style="display:none;" >
+						<input   type="file" onchange="uploadFile()" data-role="button" data-inline="true" data-mini="true" data-corners="false" style="display:none;" accept="image/*">
 					</label>
 					<label class="buttonstyle"> Reset
 							<input type="button" id="reset_but" onclick="Reset()" value="Reset" style="display:none;" >
