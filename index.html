@@ -115,9 +115,10 @@ Ysobella Torio
 		.floating-grey-rectangle {
 			background-color: #ebebebad;
 			padding: 20px;
+			padding-bottom: 80px;
 			margin: 20px auto;
 			width: 95%;
-			height:80%;
+			height:auto;
 
 			display: flex;
 			justify-content: space-between;
@@ -187,6 +188,7 @@ Ysobella Torio
 	  .buttonstyle:hover
 	  {
 		cursor: pointer;
+		background-color: 	#3d4950;
 	  }
 	  .buttonstyle1
 	  {
@@ -721,7 +723,7 @@ Ysobella Torio
 <body>
 	<nav class="nav-bar">
 		<button id="toggleSidebar">&#9776;</button>
-        <a href="#">DIGIMAP - HueWiz</a>
+        <a href="#"><strong>DIGIMAP - HueWiz</strong></a>
     </nav>
 	<div id="sidebar" class="sidebar">
         <h3>S12 Group 5</h3>
@@ -754,10 +756,12 @@ Ysobella Torio
 				<h1>Output Image</h1>
 				<div id="output_image_zone" > </div>
 				<!-- Output image goes here -->
-
-				<label class="buttonstyle"> Download
-					<input type="button" id="download_but" value="Download" style="display:none;" >
-				</label>
+				<div id="button_div" style="width:100%; height:40px;margin-top:10px;align:center;">
+					<label class="buttonstyle"> Download
+						<input type="button" id="download_but" value="Download" style="display:none;" >
+					</label>
+				</div>
+				
 			</div>
 
 			<div id="palette_div" style="width:200px; height:560px; float: left;">
